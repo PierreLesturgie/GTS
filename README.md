@@ -66,7 +66,8 @@
   -G, --genomic_map: Genomic map
   
 ##### Output: 
-###### Note: average statistics over all the genomic map, or subsetted by neutral and selection regions
+###### Note 1 - expressed in units of branch lentgths (when applicable)
+###### Note 2 - average statistics over all the genomic map, or subsetted by neutral and selection regions
 - Proportion of each topology in the region
 - Average coalescent times (C4, C3, C2) for each topology
 - Average TMRCA
