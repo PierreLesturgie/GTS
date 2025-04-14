@@ -38,7 +38,7 @@
   -G, --genomic_map: Genomic map
 
 ##### Output: 
-- Topology (out four kind of topologies; see below)
+- Topology (out four kind of topologies; see appendix)
 - Coalescent times: C4, C3, C2 
 - TMRCA
 - Pi(s)
@@ -79,3 +79,20 @@
 
 ###### Note 1 - expressed in units of branch lentgths (when applicable)
 ###### Note 2 - average statistics over all the genomic map, or subsetted by neutral and selection regions
+
+
+### Appendix: type of topologies tested (N=2 diploids)
+
+###### Topology (1)
+
+       *
+      * *
+     *   *
+    *     *
+   *       *
+  * *     * *
+ *   *   *   *
+a     b c     d
+
+
+
