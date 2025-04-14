@@ -83,16 +83,8 @@
 
 ### Appendix: type of topologies tested (N=2 diploids)
 
-###### Topology (1)
+<img width="206" alt="image" src="https://github.com/user-attachments/assets/a2ba1ce3-f3c7-4315-9376-d88f857b5e5c" />
 
-       *
-      * *
-     *   *
-    *     *
-   *       *
-  * *     * *
- *   *   *   *
-a     b c     d
 
 ###### Topology (1)
 
