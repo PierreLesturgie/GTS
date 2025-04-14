@@ -1,4 +1,14 @@
 #!usr/bin/env python3.13
+
+"""
+***treefun*** - Module for Gene Tree Statistics Tool
+Author: Pierre Lesturgie
+Version: 0.1.0
+Last update: 2025-04-14
+
+IMPORTANT: Functions based on Barbara's scripts: function (1), (2), (11) and (17). 
+"""
+
 from math import factorial
 from random import shuffle
 from pandas import DataFrame, concat
@@ -399,8 +409,8 @@ def one_pop_summary_statistics(sts_temp):
 # <<<<<< Function 17: Write branch length info, and returns coordinates of each tree >>>>>>
 def write_branch_lengths_extract_coord(sts_temp,treefile):
     coordinates=[]
-    iblFile = open(f'ibl_{treefile}', 'w', encoding="utf-8")
-    eblFile = open(f'ebl_{treefile}', 'w', encoding="utf-8")
+    iblFile = open(f'{treefile}_ibl', 'w', encoding="utf-8")
+    eblFile = open(f'{treefile}_ebl', 'w', encoding="utf-8")
     for t in sts_temp.trees():
         iblFile.write("{} {} {} {} ".format(t.num_roots, t.interval[0], t.interval[1], t.total_branch_length))
         eblFile.write("{} {} {} {} ".format(t.num_roots, t.interval[0], t.interval[1], t.total_branch_length))
@@ -422,6 +432,7 @@ def write_branch_lengths_extract_coord(sts_temp,treefile):
 
 ### THESE FUNCTIONS ARE FOR THE SUMMARIZING
 
+# <<<<<< Function 18: Summarize summary statistics output by GTS >>>>>>
 def summary_sumstats(data, span):
     data['diff'] = data['END'] - data['START']
     span_weights = data['diff'] / span
@@ -430,6 +441,7 @@ def summary_sumstats(data, span):
     result = (data.mul(span_weights, axis=0)).sum().tolist()
     return result, data.columns.tolist()
 
+# <<<<<< Function 19: Summarize topology statistics output by GTS >>>>>>
 def summary_topology_coalescence_times(data):
     result, names = [], []
     topologies = ["Topology_1", "Topology_2", "Topology_3", "Topology_4"]
@@ -457,6 +469,7 @@ def reshape_results(topo, sumstat):
     columns = topo[1] + sumstat[1]
     return DataFrame([values], columns=columns)
 
+# <<<<<< Function 20: compute spans values >>>>>>
 def compute_spans(genome):
     chrom_pos = [0] + genome.iloc[0].tolist()
     loc_types = ['0'] + genome.iloc[1].tolist()
@@ -465,24 +478,28 @@ def compute_spans(genome):
     spans[0] += 1
     return chrom_pos, loc_types, spans
 
+# <<<<<< Function 21: compute total span for each region >>>>>>
+def compute_total_span(spans, loc_types, target):
+    return sum(spans[i - 1] for i, x in enumerate(loc_types) if x == target)
+
+# <<<<<< Function 22: classify regions (i.e., neutral, selection, all) >>>>>>
 def classify_regions(data, chrom_pos, loc_types):
     loc = []
     for j in range(data.shape[0]):
         pos = data.iloc[j, 1]
         for i in range(len(chrom_pos) - 1):
-            if chrom_pos[i] < pos < chrom_pos[i + 1]:
+            if chrom_pos[i] <= pos < chrom_pos[i + 1]:
                 loc.append(loc_types[i + 1])
                 break
     return loc
 
-def compute_total_span(spans, loc_types, target):
-    return sum(spans[i - 1] for i, x in enumerate(loc_types) if x == target)
-
+# <<<<<< Function 23: summarize dataset >>>>>>
 def summarize(df, label):
     means = df.mean().to_frame().T
     means["LOC_TYPE"] = label
     return means
 
+# <<<<<< Function 24: returns the final dataset >>>>>>
 def get_stats(data,span):
     df = DataFrame()
     s_sum = summary_sumstats(data, span)

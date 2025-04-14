@@ -1,5 +1,12 @@
 #!usr/bin/env python3.13
-# SummarizeGTS.py
+
+"""
+***SummarizeGTS*** - Script to summarize computed statistics by GeneTreeStats
+Author: Pierre Lesturgie
+Version: 0.1.0
+Last update: 2025-04-14
+"""
+
 
 from pandas import DataFrame, concat, read_csv
 import warnings

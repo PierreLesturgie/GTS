@@ -1,4 +1,13 @@
 #!usr/bin/env python3.13
+
+"""
+***GeneTreeStats*** - Script for computing statistics
+Author: Pierre Lesturgie
+Version: 0.1.0
+Last update: 2025-04-14
+"""
+
+
 from pandas import read_csv
 from numpy import unique, random, sum
 from tqdm import tqdm
@@ -65,11 +74,11 @@ def run_gene_tree_stats(treefile, Nanc, runs,rho,demographic_scenario,genomic_ma
         sts_temp = TF.initiate_stats(ts_chroms, pop_size, pop_sample, alive, rng)
         coordinates = TF.write_branch_lengths_extract_coord(sts_temp, treefile)
 
-        run(f"paste ibl_{treefile} ebl_{treefile} > temp_{treefile}", shell=True)
-        run(f"cut -d' ' -f2,3,4,6,7,12,13,14,15 temp_{treefile} > BL_{treefile}", shell=True)
+        run(f"paste {treefile}_ibl {treefile}_ebl > {treefile}_temp", shell=True)
+        run(f"cut -d' ' -f2,3,4,6,7,12,13,14,15 {treefile}_temp > {treefile}_BL", shell=True)
 
         # Topology analysis
-        with open(f"BL_{treefile}") as bl, open(f"{treefile}_topology.stats", 'w') as topo_out:
+        with open(f"{treefile}_BL") as bl, open(f"{treefile}_topology.stats", 'w') as topo_out:
             topo_out.write("START END Topology C4 C3 C2\n")
             for line in bl:
                 L = [float(x) for x in line.split()]
@@ -78,7 +87,7 @@ def run_gene_tree_stats(treefile, Nanc, runs,rho,demographic_scenario,genomic_ma
                 CT = TF.coalescent_times_n4(IBL, EBL, topo)
                 topo_out.write(f"{L[0]} {L[1]} {topo} {CT[0]} {CT[1]} {CT[2]}\n")
 
-        run(f"rm ibl_{treefile} ebl_{treefile} temp_{treefile} BL_{treefile}", shell=True)
+        run(f"rm {treefile}_ibl {treefile}_ebl {treefile}_temp {treefile}_BL", shell=True)
 
         # Summary statistics
         with open(f"{treefile}_summary.stats", 'w') as summary:
