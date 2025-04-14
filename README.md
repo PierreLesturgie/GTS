@@ -1,4 +1,4 @@
-# GTS - Gene Tree Statistics Tool
+# GTS - Pairwise Gene Tree Statistics Tools
 ---
 ### Author: Pierre Lesturgie (pierrelesturgie@outlook.fr)
 
@@ -36,6 +36,16 @@
   -D, --demographic_scenario: Demographic scenario file
   
   -G, --genomic_map: Genomic map
+
+##### Output ######(in branch lentgths): 
+- Topology (out four kind of topologies; see below)
+- Coalescent times: C4, C3, C2 
+- TMRCA
+- Pi(s)
+- 1D-SFS(s)
+- Total Branch Length
+- DAFi (only multi-demes)
+- dxy (only multi-demes) 
 
 
 #### 2. SUMMARY. Summarize output stats from STATS. 
