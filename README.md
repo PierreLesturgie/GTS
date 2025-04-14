@@ -65,17 +65,17 @@
   -G, --genomic_map: Genomic map
   
 ##### Output: 
-- Proportion of each topology in the region
-- Average coalescent times (C4, C3, C2) for each topology
-- Average TMRCA
-- Average Pi(s)
-- Average 1D-SFS(s)
-- Average Total Branch Length
-- Average DAFi (only multi-demes)
-- Average dxy (only multi-demes)
-- Average Hudson's FST (multi-demes)
-- Average Distribution of TMRCAs per pair of individuals (multi-demes)
-- Average 2D-SFS (multi-demes)
+- Proportion of each **topology** per region
+- Average **coalescent times** (C4, C3, C2) for each topology
+- Average **TMRCA**
+- Average **Pi(s)**
+- Average **1D-SFS(s)**
+- Average **Total Branch Length**
+- Average **DAFi** (only multi-demes)
+- Average **dxy** (only multi-demes)
+- Average **Hudson's FST** (multi-demes)
+- Average **Distribution of TMRCAs** per pair of individuals (multi-demes)
+- Average **2D-SFS** (multi-demes)
 
 ###### Note 1 - expressed in units of branch lentgths (when applicable)
 ###### Note 2 - average statistics over all the genomic map, or subsetted by neutral and selection regions
