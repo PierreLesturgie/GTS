@@ -2,15 +2,15 @@
 ---
 ### Author: Pierre Lesturgie (pierrelesturgie@outlook.fr)
 
-## Installation: 
+### (1) Installation: 
 
-#### (1) Create env conda: 
+#### 1. Create env conda: 
 
 ```conda create --name GTS python=3.12```
 
 ```conda activate GTS```
 
-#### (2) Install: 
+#### 2. Install: 
 
 ```pip install . ```
 
