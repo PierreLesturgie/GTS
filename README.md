@@ -38,17 +38,17 @@
   -G, --genomic_map: Genomic map
 
 ##### Output: 
-- Topology (out four kind of topologies; see appendix)
-- Coalescent times: C4, C3, C2 
-- TMRCA
-- Pi(s)
-- 1D-SFS(s)
-- Total Branch Length
-- DAFi (only multi-demes)
-- dxy (only multi-demes)
-- Hudson's FST (multi-demes)
-- Distribution of TMRCAs per pair of individuals (multi-demes)
-- 2D-SFS (multi-demes)
+- **Topology** (out four kind of topologies; see appendix)
+- **Coalescent times** (C4, C3, C2)
+- **TMRCA**
+- **Pi(s)**
+- **1D-SFS(s)**
+- **Total Branch Length**
+- **DAFi** (only multi-demes)
+- **dxy** (only multi-demes)
+- **Hudson's FST** (multi-demes)
+- **Distribution of TMRCAs** per pair of individuals (multi-demes)
+- **2D-SFS** (multi-demes)
 
 ###### Note: expressed in units of branch lentgths (when applicable)
 
