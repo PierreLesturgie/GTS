@@ -1,6 +1,6 @@
 # GTS - Pairwise Gene Tree Statistics Tools
 ---
-##### Author: Pierre Lesturgie (pierrelesturgie@outlook.fr)
+#### Author: Pierre Lesturgie (pierrelesturgie@outlook.fr)
 
 ### (1) Installation: 
 
