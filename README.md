@@ -1,17 +1,20 @@
-# GTS
- GeneTree Toolkit
+# GTS - Gene Tree Statistics Tool
+---
+### Author: Pierre Lesturgie (pierrelesturgie@outlook.fr)
 
-Suggested installation: 
+## Installation: 
 
-conda create --name GTS python=3.12
-conda activate GTS
+#### (1) Create env conda: 
 
-pip install .
+```conda create --name GTS python=3.12```
 
-IF error occurs related to msprime, 
+```conda activate GTS```
 
-pip uninstall msprime
-pip install msprime
+#### (2) Install: 
 
+```pip install . ```
 
-divdel_A_h0.01_m0.000_sr0.5_s0.0001_r2.5e-6_10000_1.trees
+#### Note: iF error occurs related to msprime: 
+
+```pip uninstall msprime```
+```pip install msprime```
