@@ -14,7 +14,7 @@
 
 ```pip install . ```
 
-#### Note: if error occurs related to msprime: 
+###### Note: if error occurs related to msprime: 
 
 ```pip uninstall msprime```
 
