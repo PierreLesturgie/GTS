@@ -62,7 +62,7 @@
 
   -t, --treefile: Path to file with the tree sequence (omit '.trees')
   
-  -r, --runs:  Number of runs **Must be the same** than in ```gts stats```
+  -r, --runs:  Number of runs: **must be the same** than in ```gts stats```
   
   -G, --genomic_map: Genomic map
   
