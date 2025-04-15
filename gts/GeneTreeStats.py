@@ -123,7 +123,7 @@ def main():
     parser.add_argument("-D", "--demographic_scenario", required=True,
                         help="Demographic scenario file", default="scenario.txt")
     parser.add_argument("-G", "--genomic_map", required=True,
-                        help="Genomic map (DEPRECATED)", default="genome.txt")
+                        help="Genomic map", default="genome.txt")
     args = parser.parse_args()
 
     run_gene_tree_stats(args.treefile, args.ancestral_effective_size, args.runs, args.rho, args.demographic_scenario, args.genomic_map)
