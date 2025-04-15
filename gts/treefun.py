@@ -415,6 +415,7 @@ def write_branch_lengths_extract_coord(sts_temp,treefile):
         iblFile.write("{} {} {} {} ".format(t.num_roots, t.interval[0], t.interval[1], t.total_branch_length))
         eblFile.write("{} {} {} {} ".format(t.num_roots, t.interval[0], t.interval[1], t.total_branch_length))
         coordinates.append([t.interval[0],t.interval[1]])
+        a = 0
         for u in t.nodes():
             if t.is_leaf(u):
                # print(f"{t.branch_length(u)}")
@@ -422,6 +423,9 @@ def write_branch_lengths_extract_coord(sts_temp,treefile):
             if not t.is_leaf(u): 
                 iblFile.write("{} ".format(t.branch_length(u)))
                 #print(t.branch_length(u))
+                a += 1
+        if a != 3:
+            iblFile.write("{} ".format(0))
         iblFile.write("\n")
         eblFile.write("\n")
     iblFile.close()
