@@ -94,4 +94,4 @@
 <img width="204" alt="image" src="https://github.com/user-attachments/assets/f2d23fb9-19fc-41c9-9de1-7bb066e64f1a" />
 
 
-###### Note - with all possible combinations of (haploid) individuals 
+###### Note - with all possible combinations of N=4 (haploid) individuals 
