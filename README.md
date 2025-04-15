@@ -4,7 +4,7 @@
 
 ### (1) Installation: 
 
-#### 1. Create env conda: 
+#### 1. Create env conda (optional): 
 
 ```conda create --name GTS python=3.12```
 
@@ -13,6 +13,8 @@
 #### 2. Install: 
 
 ```pip install . ```
+
+###### Uninstall : ```pip uninstall gts```
 
 ###### Note: if error occurs related to msprime: uninstall and reinstall using pip
 
@@ -60,7 +62,7 @@
 
   -t, --treefile: Path to file with the tree sequence (omit '.trees')
   
-  -r, --runs:  Number of runs ** Must be the same than in ```gts stats```
+  -r, --runs:  Number of runs: **must be the same** than in ```gts stats```
   
   -G, --genomic_map: Genomic map
   
@@ -92,4 +94,4 @@
 <img width="204" alt="image" src="https://github.com/user-attachments/assets/f2d23fb9-19fc-41c9-9de1-7bb066e64f1a" />
 
 
-###### Note - with all possible combinations of (haploid) individuals 
+###### Note - with all possible combinations of N=4 (haploid) individuals 
