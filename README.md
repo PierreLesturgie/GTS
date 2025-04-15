@@ -14,7 +14,7 @@
 
 ```pip install . ```
 
-###### Uninstall : pip uninstall gts
+###### Uninstall : ```pip uninstall gts```
 
 ###### Note: if error occurs related to msprime: uninstall and reinstall using pip
 
