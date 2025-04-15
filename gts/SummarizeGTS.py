@@ -55,15 +55,3 @@ def run_summary(tag, runs, genomic_map):
     print(f"Summary statistics saved to: {tag}.sumstat and {tag}.rawsumstat")
 
 
-
-def main():
-    parser = argparse.ArgumentParser(description='SummarizeGTS: summarize GeneTreeStats output')
-    parser.add_argument("-t", "--tag", required=True, help="Tag of the replicate")
-    parser.add_argument("-r", "--runs", required=True, help="Number of runs", default=100)
-    parser.add_argument("-G", "--genomic_map", required=True, help="Genomic map", default="genome.txt")
-    args = parser.parse_args()
-
-    run_summary(args.tag, args.runs, args.genomic_map)
-
-if __name__ == "__main__":
-    main()

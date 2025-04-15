@@ -109,26 +109,3 @@ def run_gene_tree_stats(treefile, Nanc, runs,rho,demographic_scenario,genomic_ma
         run(f"rm {treefile}_topology.stats {treefile}_summary.stats {treefile}_sumstat.temp {treefile}_header.stats", shell=True)
     pass
 
-
-def main():
-    parser = argparse.ArgumentParser(description='GeneTreeStats: computation of pairwise gene tree-based statistics')
-    parser.add_argument("-t", "--treefile", required=True,
-                        help="Path to file with the tree sequence (omit '.trees')")
-    parser.add_argument("-Nanc", "--ancestral_effective_size", required=True, type=int,
-                        help="Ancestral effective size")
-    parser.add_argument("-r", "--runs", required=True,
-                        help="Number of sampling runs", default=100, type=int)
-    parser.add_argument("-R", "--rho", required=True,
-                        help="Recombination rate", default=2.5e-8, type=float)
-    parser.add_argument("-D", "--demographic_scenario", required=True,
-                        help="Demographic scenario file", default="scenario.txt")
-    parser.add_argument("-G", "--genomic_map", required=True,
-                        help="Genomic map", default="genome.txt")
-    args = parser.parse_args()
-
-    run_gene_tree_stats(args.treefile, args.ancestral_effective_size, args.runs, args.rho, args.demographic_scenario, args.genomic_map)
-
-
-if __name__ == "__main__":
-    main()
-
