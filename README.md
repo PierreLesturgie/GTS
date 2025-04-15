@@ -22,7 +22,8 @@
 
 ```gts <command> <arguments>``` (do ```gts --help``` for more information)
  
-#### 1. STATS. computing summary and topology statistics for each tree in the .trees tree sequence
+#### 1. STATS 
+##### computing summary and topology statistics for each tree in the .trees tree sequence
 
 ```gts stats -t <treefile> -Nanc <ancestral_effective_size> -r <number_of_sampling_runs> -R <number_of_runs> -D <demographic_scenario> -G <genomic_structure>```
 
@@ -54,7 +55,8 @@
 
 ###### Note: expressed in units of branch lentgths (when applicable)
 
-#### 2. SUMMARY. Summarize output stats from STATS. 
+#### 2. SUMMARY 
+##### Summarize output stats from STATS. 
 
 ```gts summary --tag <treefile> -r <number_of_sampling_runs> -G <genomic_structure>```
 
