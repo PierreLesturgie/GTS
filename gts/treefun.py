@@ -4,7 +4,7 @@
 ***treefun*** - Module for Gene Tree Statistics Tool
 Author: Pierre Lesturgie
 Version: 0.1.0
-Last update: 2025-04-14
+Last update: 2025-04-15
 
 IMPORTANT: Functions based on Barbara's scripts: function (1), (2), (11) and (17). 
 """
@@ -73,7 +73,7 @@ def coal_times_to_combination(list_coal_times,TBL):
     sorted_coal_times_with_indivs = sorted(zip(list_coal_times, list_indivs))
     
     # This is an exception when C4=C3 but not starlike
-    if len(set(list_coal_times)) and sum(list_coal_times) != TBL:
+    if len(set(list_coal_times)) == 1 and sum(list_coal_times) != TBL:
         combination = [[1,2],[3,4]]
     
     else: 
