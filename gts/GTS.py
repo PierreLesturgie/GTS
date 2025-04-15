@@ -1,7 +1,7 @@
 #!usr/bin/env python3.13
 
 """
-GTS - Gene Tree Statistics Tool
+GTS - Gene Tree Stats
 Author: Pierre Lesturgie
 Version: 0.1.0
 Last update: 2025-04-14
@@ -13,7 +13,7 @@ from .SummarizeGTS import run_summary
 from ._version import __version__, __last_update__
 
 def main():
-    print(f"GTS - Gene Tree Statistics Tool v{__version__} (Last update {__last_update__})")
+    print(f"GTS - Gene Tree Statistics v{__version__} (Last update {__last_update__})")
     
     parser = argparse.ArgumentParser(description="GeneTree Toolkit")
     subparsers = parser.add_subparsers(dest="command", required=True)
