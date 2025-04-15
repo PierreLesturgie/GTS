@@ -89,9 +89,10 @@
 
 <img width="199" alt="image" src="https://github.com/user-attachments/assets/212cc0ba-fdec-4900-b058-d862c16d4af3" />
 
-<img width="204" alt="image" src="https://github.com/user-attachments/assets/548dead5-9102-4dda-ab7d-d29be9ecd65b" />
+<img width="204" alt="image" src="https://github.com/user-attachments/assets/f9061e12-3041-4a18-a0e4-29eea7005291" />
 
-<img width="204" alt="image" src="https://github.com/user-attachments/assets/f2d23fb9-19fc-41c9-9de1-7bb066e64f1a" />
+<img width="204" alt="image" src="https://github.com/user-attachments/assets/3f05db78-6233-4151-a0b8-54eab50f8c65" />
+
 
 
 ###### Note - with all possible combinations of N=4 (haploid) individuals 
