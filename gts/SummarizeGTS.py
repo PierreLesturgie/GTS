@@ -4,7 +4,7 @@
 ***SummarizeGTS*** - Script to summarize computed statistics by GeneTreeStats
 Author: Pierre Lesturgie
 Version: 0.1.0
-Last update: 2025-04-14
+Last update: 2025-04-22
 """
 
 
@@ -28,6 +28,8 @@ def run_summary(tag, runs, genomic_map):
     has_sel = "S" in loc_types
     has_neu = "N" in loc_types
 
+    all_final,sel_final,neu_final = DataFrame(),DataFrame(),DataFrame()
+
     for r in tqdm(range(nruns), desc="Processing runs"):
         
         data = read_csv(f"{tag}_stats_{r}.detailed", sep=" ")
@@ -40,18 +42,17 @@ def run_summary(tag, runs, genomic_map):
         sel_data = data[data['loc_type'] == "S"] if has_sel else DataFrame()
         neu_data = data[data['loc_type'] == "N"] if has_neu else DataFrame()
 
-        final = TF.summarize(TF.get_stats(data,span_all), "ALL")
+        all_final = concat([all_final,TF.get_stats(data,span_all)])
 
         if has_sel and not sel_data.empty:
-            final = concat([final, TF.summarize(TF.get_stats(sel_data,span_sel), "SELECTION")], ignore_index=True)
+            sel_final = concat([sel_final,TF.get_stats(sel_data,span_sel)])
 
         if has_neu and not neu_data.empty:
-            final = concat([final, TF.summarize(TF.get_stats(neu_data,span_neu), "NEUTRAL")], ignore_index=True)
+            neu_final = concat([neu_final,TF.get_stats(neu_data,span_neu)])
 
-
+    final = concat([TF.summarize(all_final,"ALL"),TF.summarize(sel_final,"SELECTION"),TF.summarize(neu_final,"NEUTRAL")])
+    
     final.to_csv(f"{tag}.sumstat", index=False)
     final.to_csv(f"{tag}.rawsumstat", header=False, index=False)
 
     print(f"Summary statistics saved to: {tag}.sumstat and {tag}.rawsumstat")
-
-

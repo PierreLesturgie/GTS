@@ -4,7 +4,7 @@
 ***treefun*** - Module for Gene Tree Statistics Tool
 Author: Pierre Lesturgie
 Version: 0.1.0
-Last update: 2025-04-15
+Last update: 2025-04-22
 
 IMPORTANT: Functions based on Barbara's scripts: function (1), (2), (11) and (17). 
 """
@@ -237,7 +237,7 @@ def coalescent_times_n4(IB,EB,topo):
         c4 = min(EB)
         EB.pop(np.argmin(EB)); EB.pop(np.argmin(EB))
         c3 = min(EB); EB.pop(np.argmin(EB))
-        c2 = c3 + max(IB)
+        c2 = max(EB)
     if topo == 'Topology_3': 
         c4 = min(EB)
         EB.pop(np.argmin(EB)); EB.pop(np.argmin(EB)); EB.pop(np.argmin(EB))
@@ -364,6 +364,10 @@ def pairwise_summary_statistics(sts_temp, popsamplediplo, pop0=0, pop1=1):
     RESULT.append(dxy)
     COLNAMES.append(f"dxy_{pop0}_{pop1}")
     
+    ### FST IS from TSKIT, not really Hudson's?
+    #RESULT.append(sts_temp.Fst(sample_sets=[A,B],mode="branch"))
+    #COLNAMES.append(f"fst_{pop0}_{pop1}")
+    
     #HUDSON'S FST
     FST = (dxy - (div[0] + div[1])/2)/dxy
     RESULT.append(FST)
@@ -462,7 +466,7 @@ def summary_topology_coalescence_times(data):
         
         weighted = filtered.copy()
         for col in ["C4", "C3", "C2"]:
-            weighted[col] *= weighted["SPAN"]
+            weighted[col] *= weighted["SPAN"] / prop ## ADDED THIS ONE TO CORRECT BY TOPOLOGY SPAN
             result.append(weighted[col].sum())
             names.append(f"{topo}_{col}")
     
@@ -499,6 +503,7 @@ def classify_regions(data, chrom_pos, loc_types):
 
 # <<<<<< Function 23: summarize dataset >>>>>>
 def summarize(df, label):
+    df = df.replace(0, np.nan)
     means = df.mean().to_frame().T
     means["LOC_TYPE"] = label
     return means
