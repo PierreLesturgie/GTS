@@ -583,7 +583,7 @@ def summary_sumstats(data, span):
 # <<<<<< Function 20: Summarize topology statistics output by GTS >>>>>>
 def summary_topology_coalescence_times(data):
     result, names = [], []
-    topologies = ["Topology_1", "Topology_2", "Topology_3", "Topology_4"]
+    topologies = ["Topology_1_INTRA", "Topology_1_INTER","Topology_2_INTRA", "Topology_2_INTER", "Topology_3", "Topology_4"]
     
     base = data[["START", "END", "Topology", "C4", "C3", "C2"]].copy()
     base["diff"] = base["END"] - base["START"]
