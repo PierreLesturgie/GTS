@@ -67,7 +67,7 @@ def run_gene_tree_stats(treefile, Nanc, runs,rho,demographic_scenario,genomic_ma
         print("Warning: code not tested for more than 2 demes.")
 
     popsamplediplo = [x * 2 for x in pop_sample]
-    topologies = TF.possible_topologies()
+    topologies = TF.possible_topologies_with_subgroups()
 
     # Sampling loop
     for i in tqdm(range(runs), desc="Sampling"):
