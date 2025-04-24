@@ -3,5 +3,5 @@
 
 #_version.py
 
-__version__ = "0.1.0"
-__last_update__ = "2025-04-22"
+__version__ = "0.1.1"
+__last_update__ = "2025-04-24"

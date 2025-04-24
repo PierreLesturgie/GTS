@@ -4,9 +4,9 @@
 ***treefun*** - Module for Gene Tree Statistics Tool
 Author: Pierre Lesturgie
 Version: 0.1.0
-Last update: 2025-04-22
+Last update: 2025-04-24
 
-IMPORTANT: Functions based on Barbara's scripts: function (1), (2), (11) and (17). 
+IMPORTANT: Functions based on Barbara's scripts: function (1), (2), (12) and (18). 
 """
 
 from math import factorial
@@ -133,7 +133,8 @@ def combinations(topology_char):
         
     return sequence_char 
 
-# <<<<<< Function 8: computes all possible combinations for all 4 topologies >>>>>> 
+# <<<<<< Function 8a: computes all possible combinations for all 4 topologies >>>>>> 
+# <<<<<< DEPRECACATED >>>>>> 
 def possible_topologies():
 
 
@@ -226,14 +227,138 @@ def possible_topologies():
 
     return result
 
-# <<<<<< Function 9: computes coalescent times given Internal, External branches and a topology >>>>>> 
+# <<<<<< Function 8b: computes all possible combinations for all 4 topologies with subtopo >>>>>> 
+def possible_topologies_with_subgroups():
+    
+
+    ### TOPO 1
+    #                     *
+    #                    * *
+    #                   *   *
+    #                  *     *
+    #                 *       *
+    #                * *     * *
+    #               *   *   *   *
+    #              a     b c     d
+
+    combinaison_char_1 = "((a,b),(c,d))"
+    T1 = combinations(combinaison_char_1)
+
+
+    ### TOPO 2
+    #                     *
+    #                    * *
+    #                   *   *
+    #                  *     *
+    #                 * *     *
+    #                *   *     *
+    #               *   * *     *
+    #              *   *   *     *
+    #             a   b     c     d
+    #     NEED ALSO TO MAKE THE REVERSE ONE FOR COMPUATION PURPOSES
+
+    #combinaison_char_2 = "((a,(b,c)),d)"
+    #combinaison_char_2_reverse = "(a,((b,c),d))"
+    #T2 = combinations(combinaison_char_2)
+    #T2_reverse = combinations(combinaison_char_2_reverse)
+    #T2 = concat([T2,T2_reverse], ignore_index=True)
+
+
+    ### TOPO 3
+    #                     *
+    #                    * *
+    #                   *   *
+    #                  *   * *
+    #                 *   *   *
+    #                *   *   * *
+    #               *   *   *   *
+    #              a   b   c     d
+    #     NEED ALSO TO MAKE THE REVERSE ONE FOR COMPUATION PURPOSES
+
+    combinaison_char_2 = "(a,(b,(c,d)))"
+    combinaison_char_2_reverse = "(((a,b),c),d)"
+    T2 = combinations(combinaison_char_2)
+    T2_reverse = combinations(combinaison_char_2_reverse)
+    T2 = concat([T2,T2_reverse], ignore_index=True)
+
+
+    ### TOPO 4
+    #                     *
+    #                    * *
+    #                   *   *
+    #                  *     *
+    #                 * *     *
+    #                * * *     *
+    #               *  *  *     *
+    #              a    b  c     d
+    ### NEED ALSO TO MAKE THE REVERSE ONE FOR COMPUATION PURPOSES
+
+    combinaison_char_3 = "((a,b,c),d)"
+    combinaison_char_3_reverse = "(a,(b,c,d))"
+    T3 = combinations(combinaison_char_3)
+    T3_reverse = combinations(combinaison_char_3_reverse)
+    T3 = concat([T3,T3_reverse], ignore_index=True)
+
+
+    ### TOPO 5 -- full star
+        
+    #                   *
+    #                 ** **
+    #                * * * *
+    #               *  * *  *
+    #              *   * *   *
+    #             a    b c    d
+
+    combinaison_char_4 = "(a,b,c,d)"
+    T4 = combinations(combinaison_char_4)
+
+    # --- SUBTOPOLOGY GROUPING ---
+
+    # Topology 1 subgroups
+    group_1A = {"((1,2),(3,4))", "((2,1),(3,4))", 
+                "((1,2),(4,3))", "((2,1),(4,3))",
+                "((3,4),(1,2))", "((3,4),(2,1))", 
+                "((4,3),(1,2))", "((4,3),(2,1))"}
+    SubT1_A, SubT1_B = filter_topologies(T1, group_1A)
+
+    # Topology 2 subgroups
+    group_2A = {
+        "(1,(2,(3,4)))", "(1,(2,(4,3)))",
+        "(2,(1,(4,3)))", "(2,(1,(3,4)))",
+        "(3,(4,(1,2)))", "(3,(4,(2,1)))",
+        "(4,(3,(2,1)))", "(4,(3,(1,2)))",
+        "(((1,2),3),4)", "(((2,1),3),4)",
+        "(((1,2),4),3)", "(((2,1),4),3)",
+        "(((3,4),1),2)", "(((3,4),2),1)",
+        "(((4,3),1),2)", "(((4,3),2),1)",
+    }
+    SubT2_A, SubT2_B = filter_topologies(T2, group_2A)
+
+    # Final dataframe with all subgroups
+    result = DataFrame({
+        "Topology_1_INTRA": SubT1_A["Combination"],
+        "Topology_1_INTER": SubT1_B["Combination"],
+        "Topology_2_INTRA": SubT2_A["Combination"],
+        "Topology_2_INTER": SubT2_B["Combination"],
+        "Topology_3": T3["Combination"],
+        "Topology_4": T4["Combination"]
+    })
+
+    return result
+
+# <<<<<< Function 9: Used to filter topologies 1 and 2 in two subtopologies >>>>>> 
+def filter_topologies(df, group_set):
+    ### THE ~ inverts the is in (i.e., returns false)
+    return df[df["Combination"].isin(group_set)].reset_index(drop=True), df[~df["Combination"].isin(group_set)].reset_index(drop=True)
+
+# <<<<<< Function 10: computes coalescent times given Internal, External branches and a topology >>>>>> 
 def coalescent_times_n4(IB,EB,topo):
-    if topo == 'Topology_1':
+    if topo == 'Topology_1_INTRA' or topo == 'Topology_1_INTER':
         c4 = min(EB)
         EB.pop(np.argmin(EB)); EB.pop(np.argmin(EB))
         c3 = min(EB)
         c2 = c3 + min(IB)
-    if topo == 'Topology_2': 
+    if topo == 'Topology_2_INTRA' or topo == 'Topology_2_INTER': 
         c4 = min(EB)
         EB.pop(np.argmin(EB)); EB.pop(np.argmin(EB))
         c3 = min(EB); EB.pop(np.argmin(EB))
@@ -248,7 +373,7 @@ def coalescent_times_n4(IB,EB,topo):
         c3 = c2 = 0
     return c4, c3, c2
 
-# <<<<<< Function 10: computes initial objects used to compute statistics >>>>>> 
+# <<<<<< Function 11: computes initial objects used to compute statistics >>>>>> 
 #### Now works for panmictic population
 def initiate_stats(ts_chroms,pop_size,pop_sample,alive,rng):
     if len(pop_size) == 1:
@@ -272,14 +397,14 @@ def initiate_stats(ts_chroms,pop_size,pop_sample,alive,rng):
 
     return sts_temp
 
-# <<<<<< Function 11: Computes the average TMRCA over all the trees >>>>>>
+# <<<<<< Function 12: Computes the average TMRCA over all the trees >>>>>>
 def get_TMRCA(sts):
     av_tMRCA = 0
     for tree in sts.trees():
         av_tMRCA += tree.time(tree.root) * tree.span/sts.sequence_length
     return av_tMRCA
 
-# <<<<<< Function 12: Computes pairwise TMRCAs between individuals >>>>>>
+# <<<<<< Function 13: Computes pairwise TMRCAs between individuals >>>>>>
 def get_pairwise_tmrcas(sts_temp):
     RES, COLN = [],[]
     samples = sts_temp.samples()
@@ -300,7 +425,7 @@ def get_pairwise_tmrcas(sts_temp):
                 COLN.append(f"TMRCA_individual{i}_{j}")  
     return RES, COLN
 
-# <<<<<< Function 13: Computes 2D sfs, returns as list >>>>>>
+# <<<<<< Function 14: Computes 2D sfs, returns as list >>>>>>
 def derived_2D_sfs(sts_temp,popsamplediplo,pop0=0,pop1=1):
     group1,group2,SFS_ALL,SFS_COLNAMES = [],[],[],[]
     #getting the haploid individuals to compute sfs
@@ -322,7 +447,7 @@ def derived_2D_sfs(sts_temp,popsamplediplo,pop0=0,pop1=1):
     #print(SFS_COLNAMES)
     return SFS_ALL, SFS_COLNAMES
 
-# <<<<<< Function 14: Computes 1D sfs, returns as list >>>>>>
+# <<<<<< Function 15: Computes 1D sfs, returns as list >>>>>>
 def derived_1D_sfs(sts_temp):
     SFS = sts_temp.allele_frequency_spectrum(mode="branch",polarised=True)
     SFS_ALL,SFS_COLNAMES = [],[]
@@ -334,7 +459,7 @@ def derived_1D_sfs(sts_temp):
         
     return SFS_ALL, SFS_COLNAMES
 
-# <<<<<< Function 15: computes all pairwise summary statistics >>>>>>
+# <<<<<< Function 16: computes all pairwise summary statistics >>>>>>
 def pairwise_summary_statistics(sts_temp, popsamplediplo, pop0=0, pop1=1):
     
     ### get tmrca from distribution of TMRCAS
@@ -349,6 +474,9 @@ def pairwise_summary_statistics(sts_temp, popsamplediplo, pop0=0, pop1=1):
     div=sts_temp.diversity(sample_sets=[A,B],mode="branch")
     RESULT.append(div[0]);RESULT.append(div[1])
     COLNAMES.append(f"pi_{pop0}");COLNAMES.append(f"pi_{pop1}")
+    
+    RESULT.append(sts_temp.num_mutations)
+    COLNAMES.append(f"mutations_{pop0}_{pop1}")
                 
     # computing total branch length --> used to compute dafi
     TOT_BR_LEN = sum(sts_temp.allele_frequency_spectrum(mode="branch"))
@@ -389,7 +517,7 @@ def pairwise_summary_statistics(sts_temp, popsamplediplo, pop0=0, pop1=1):
         
     return RESULT, COLNAMES
 
-# <<<<<< Function 16: computes summary statistics for a single deme/population >>>>>>
+# <<<<<< Function 17: computes summary statistics for a single deme/population >>>>>>
 def one_pop_summary_statistics(sts_temp):
     COLNAMES, RESULT = [],[]
     
@@ -398,6 +526,9 @@ def one_pop_summary_statistics(sts_temp):
     
     RESULT.append(sts_temp.diversity(mode="branch"))
     COLNAMES.append(f"pi")
+    
+    RESULT.append(sts_temp.num_mutations)
+    COLNAMES.append(f"mutations")
                 
     # computing total branch length --> used to compute dafi
     RESULT.append(sum(sts_temp.allele_frequency_spectrum(mode="branch")))
@@ -410,7 +541,7 @@ def one_pop_summary_statistics(sts_temp):
     
     return RESULT, COLNAMES
 
-# <<<<<< Function 17: Write branch length info, and returns coordinates of each tree >>>>>>
+# <<<<<< Function 18: Write branch length info, and returns coordinates of each tree >>>>>>
 def write_branch_lengths_extract_coord(sts_temp,treefile):
     coordinates=[]
     iblFile = open(f'{treefile}_ibl', 'w', encoding="utf-8")
@@ -440,7 +571,7 @@ def write_branch_lengths_extract_coord(sts_temp,treefile):
 
 ### THESE FUNCTIONS ARE FOR THE SUMMARIZING
 
-# <<<<<< Function 18: Summarize summary statistics output by GTS >>>>>>
+# <<<<<< Function 19: Summarize summary statistics output by GTS >>>>>>
 def summary_sumstats(data, span):
     data['diff'] = data['END'] - data['START']
     span_weights = data['diff'] / span
@@ -449,7 +580,7 @@ def summary_sumstats(data, span):
     result = (data.mul(span_weights, axis=0)).sum().tolist()
     return result, data.columns.tolist()
 
-# <<<<<< Function 19: Summarize topology statistics output by GTS >>>>>>
+# <<<<<< Function 20: Summarize topology statistics output by GTS >>>>>>
 def summary_topology_coalescence_times(data):
     result, names = [], []
     topologies = ["Topology_1", "Topology_2", "Topology_3", "Topology_4"]
@@ -477,7 +608,7 @@ def reshape_results(topo, sumstat):
     columns = topo[1] + sumstat[1]
     return DataFrame([values], columns=columns)
 
-# <<<<<< Function 20: compute spans values >>>>>>
+# <<<<<< Function 21: compute spans values >>>>>>
 def compute_spans(genome):
     chrom_pos = [0] + genome.iloc[0].tolist()
     loc_types = ['0'] + genome.iloc[1].tolist()
@@ -486,11 +617,11 @@ def compute_spans(genome):
     spans[0] += 1
     return chrom_pos, loc_types, spans
 
-# <<<<<< Function 21: compute total span for each region >>>>>>
+# <<<<<< Function 22: compute total span for each region >>>>>>
 def compute_total_span(spans, loc_types, target):
     return sum(spans[i - 1] for i, x in enumerate(loc_types) if x == target)
 
-# <<<<<< Function 22: classify regions (i.e., neutral, selection, all) >>>>>>
+# <<<<<< Function 23: classify regions (i.e., neutral, selection, all) >>>>>>
 def classify_regions(data, chrom_pos, loc_types):
     loc = []
     for j in range(data.shape[0]):
@@ -501,14 +632,14 @@ def classify_regions(data, chrom_pos, loc_types):
                 break
     return loc
 
-# <<<<<< Function 23: summarize dataset >>>>>>
+# <<<<<< Function 24: summarize dataset >>>>>>
 def summarize(df, label):
     df = df.replace(0, np.nan)
     means = df.mean().to_frame().T
     means["LOC_TYPE"] = label
     return means
 
-# <<<<<< Function 24: returns the final dataset >>>>>>
+# <<<<<< Function 25: returns the final dataset >>>>>>
 def get_stats(data,span):
     df = DataFrame()
     s_sum = summary_sumstats(data, span)

@@ -4,7 +4,7 @@
 ***GeneTreeStats*** - Script for computing statistics
 Author: Pierre Lesturgie
 Version: 0.1.0
-Last update: 2025-04-14
+Last update: 2025-04-24
 """
 
 
@@ -28,7 +28,7 @@ def run_gene_tree_stats(treefile, Nanc, runs,rho,demographic_scenario,genomic_ma
 
     # Genome map (deprecated)
     genome = read_csv(genomic_map, sep=" ")
-    chrom_positions = [0, 99999]
+    chrom_positions = [0, int(genome.iloc[0].tolist()[-1])]
 
     print("Chromosome positions:", chrom_positions)
 
