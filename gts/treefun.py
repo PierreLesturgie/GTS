@@ -634,7 +634,12 @@ def classify_regions(data, chrom_pos, loc_types):
 
 # <<<<<< Function 24: summarize dataset >>>>>>
 def summarize(df, label):
+    topology_colnames = ["Topology_1_INTRA", "Topology_1_INTER","Topology_2_INTRA",
+                         "Topology_2_INTER","Topology_3","Topology_4"]
+    df_temp = df
     df = df.replace(0, np.nan)
+    for i in topology_colnames:
+        df[f"{i}"] =  df_temp[f"{i}"]
     means = df.mean().to_frame().T
     means["LOC_TYPE"] = label
     return means
