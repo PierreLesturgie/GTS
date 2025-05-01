@@ -1,4 +1,4 @@
-# GTS - Pairwise Gene Tree Stats
+# GTS - Pairwise Gene Tree Stats v0.1.1
 ---
 #### Author: Pierre Lesturgie (pierrelesturgie@outlook.fr)
 
