@@ -437,6 +437,7 @@ def derived_2D_sfs(sts_temp,popsamplediplo,pop0=0,pop1=1):
     # 2D-SFS
     SFS = sts_temp.allele_frequency_spectrum([group1,group2], 
                                                 mode="branch",span_normalise=True)
+    
     #print(SFS)
     for d in range(popsamplediplo[pop0]+1):
         for f in range(popsamplediplo[pop1]+1):
@@ -603,9 +604,13 @@ def summary_topology_coalescence_times(data):
     
     return result, names
 
-def reshape_results(topo, sumstat):
-    values = topo[0] + sumstat[0]
-    columns = topo[1] + sumstat[1]
+def reshape_results(topo, sumstat, qtfst=None):
+    values = topo[0] + sumstat[0] 
+    columns = topo[1] + sumstat[1] 
+    if qtfst is not None:
+        values = values + qtfst[0] 
+        columns = columns + qtfst[1] 
+    
     return DataFrame([values], columns=columns)
 
 # <<<<<< Function 21: compute spans values >>>>>>
@@ -649,5 +654,45 @@ def get_stats(data,span):
     df = DataFrame()
     s_sum = summary_sumstats(data, span)
     s_topo = summary_topology_coalescence_times(data)
-    df = concat([df, reshape_results(s_topo, s_sum)], ignore_index=True)
+    if 'Hudson_fst_0_1' in data.columns:
+        s_qt = qt_fst(data)
+        df = concat([df, reshape_results(s_topo, s_sum, qtfst=s_qt)], ignore_index=True)
+    else: 
+        df = concat([df, reshape_results(s_topo, s_sum, qtfst=None)], ignore_index=True)
     return df
+
+
+# Function to compute FST proportions and column names per topology
+def topo_span_fst(df, tag):
+    topologies = [
+    "Topology_1_INTRA", "Topology_1_INTER", "Topology_2_INTRA",
+    "Topology_2_INTER", "Topology_3", "Topology_4"
+    ]
+    total = df["diff"].sum()
+    colnames = [f"FST_{tag}_{topo}" for topo in topologies]
+    values = [df[df["Topology"] == topo]["diff"].sum() / total for topo in topologies]
+    return values, colnames
+
+# Main function to extract FST summaries
+def qt_fst(data):
+    # Calculate quantile thresholds
+    thresholds = data["Hudson_fst_0_1"].quantile([0.05, 0.25, 0.5, 0.75, 0.95]).tolist()
+    quantile_tags = ["0.05", "0.25", "0.5", "0.75", "0.95"]
+    
+    # Define bins for quantiles
+    bins = [
+        data[data["Hudson_fst_0_1"] <= thresholds[0]],
+        data[(data["Hudson_fst_0_1"] > thresholds[0]) & (data["Hudson_fst_0_1"] <= thresholds[1])],
+        data[(data["Hudson_fst_0_1"] > thresholds[1]) & (data["Hudson_fst_0_1"] <= thresholds[2])],
+        data[(data["Hudson_fst_0_1"] > thresholds[2]) & (data["Hudson_fst_0_1"] <= thresholds[3])],
+        data[data["Hudson_fst_0_1"] > thresholds[4]]
+    ]
+    
+    # Compute results and column names
+    result, colnames = [], []
+    for tag, bin_df in zip(quantile_tags, bins):
+        values, names = topo_span_fst(bin_df, tag)
+        result.extend(values)
+        colnames.extend(names)
+    
+    return result, colnames
