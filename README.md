@@ -97,9 +97,8 @@
 
 <img width="204" alt="image" src="https://github.com/user-attachments/assets/3f05db78-6233-4151-a0b8-54eab50f8c65" />
 
-#### Note - All topologies considered are computed with all possible combinations of N=4 (haploid) individuals
-#### However: Topology 1 and 2 have two subset topologies: 
+#### Note - All topologies considered are computed with all possible combinations of N=4 (haploid) individuals, except for Topology 1 and 2 which have two subset topologies: 
 With individuals 1 and 2 being from deme 1 and individuals 3 and 4 from deme 2: 
-* Topology Intra groups indivuduals from a similar deme for the first event, i.e., ((1,2),(3,4))-like for Topology 1, ((3,(1,2)),4)-like for topology 2.
-* Topology Inter groups individuals from different demes for the first event, i.e., ((1,3),(2,4))-like for Topology 1, ((3,(1,4)),2)-like for topology 2.
+* Topology **Intra** groups indivuduals from _similar_ deme for the first event, i.e., ((1,2),(3,4))-like for Topology 1, ((3,(1,2)),4)-like for topology 2.
+* Topology **Inter** groups individuals from _different_ demes for the first event, i.e., ((1,3),(2,4))-like for Topology 1, ((3,(1,4)),2)-like for topology 2.
 
