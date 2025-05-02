@@ -436,8 +436,7 @@ def derived_2D_sfs(sts_temp,popsamplediplo,pop0=0,pop1=1):
     ### DEFINE GROUPS BEFORE!! 
     # 2D-SFS
     SFS = sts_temp.allele_frequency_spectrum([group1,group2], 
-                                                mode="branch",span_normalise=True)
-    
+                                                mode="branch",span_normalise=True,polarised=True)
     #print(SFS)
     for d in range(popsamplediplo[pop0]+1):
         for f in range(popsamplediplo[pop1]+1):
