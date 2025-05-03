@@ -637,14 +637,24 @@ def classify_regions(data, chrom_pos, loc_types):
     return loc
 
 # <<<<<< Function 24: summarize dataset >>>>>>
+### HERE FIND A SOLUTION FOR QFST: not removing 0!! 
 def summarize(df, label):
     topology_colnames = ["Topology_1_INTRA", "Topology_1_INTER","Topology_2_INTRA",
-                         "Topology_2_INTER","Topology_3","Topology_4"]
+                            "Topology_2_INTER","Topology_3","Topology_4"]
+    
+    # filtering for FST. Normally, if no FST, returns nothing. 
+    # This is to not replace the 0s in FST by NA
+    df_fst = df.filter(regex='^FST')
+    df = df[df.columns.drop(list(df.filter(regex='^FST')))]
+    
     df_temp = df
     df = df.replace(0, np.nan)
+    
     for i in topology_colnames:
-        df[f"{i}"] =  df_temp[f"{i}"]
-    means = df.mean().to_frame().T
+        df[f"{i}"] =  df_temp[f"{i}"] 
+    
+    df_merged = concat([df,df_fst], ignore_index=True)
+    means = df_merged.mean().to_frame().T
     means["LOC_TYPE"] = label
     return means
 
