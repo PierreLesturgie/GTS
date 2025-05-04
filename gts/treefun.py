@@ -686,7 +686,7 @@ def topo_span_fst(df, tag):
 def qt_fst(data):
     # Calculate quantile thresholds
     thresholds = data["Hudson_fst_0_1"].quantile([0.05, 0.25, 0.5, 0.75, 0.95]).tolist()
-    quantile_tags = ["0.05", "0.25", "0.5", "0.75", "0.95"]
+    quantile_tags = ["0.05", "0.05 - 0.25", "0.25 - 0.5", "0.5 - 0.75", "0.75 - 0.95", "0.95"]
     
     # Define bins for quantiles
     bins = [
@@ -694,6 +694,7 @@ def qt_fst(data):
         data[(data["Hudson_fst_0_1"] > thresholds[0]) & (data["Hudson_fst_0_1"] <= thresholds[1])],
         data[(data["Hudson_fst_0_1"] > thresholds[1]) & (data["Hudson_fst_0_1"] <= thresholds[2])],
         data[(data["Hudson_fst_0_1"] > thresholds[2]) & (data["Hudson_fst_0_1"] <= thresholds[3])],
+        data[(data["Hudson_fst_0_1"] > thresholds[3]) & (data["Hudson_fst_0_1"] <= thresholds[4])],
         data[data["Hudson_fst_0_1"] > thresholds[4]]
     ]
     
