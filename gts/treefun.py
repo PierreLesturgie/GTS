@@ -659,50 +659,48 @@ def summarize(df, label):
     return means
 
 # <<<<<< Function 25: returns the final dataset >>>>>>
+def compute_topology_proportions_FST(data):
+
+    topologies = [
+    "Topology_1_INTRA", "Topology_1_INTER", "Topology_2_INTRA",
+    "Topology_2_INTER", "Topology_3", "Topology_4"
+    ]
+
+    thresholds = data["Hudson_fst_0_1"].quantile([0, 0.25, 0.5, 0.75, 1]).tolist()
+    quantile_tags = ["0 - 0.25", "0.25 - 0.5", "0.5 - 0.75", "0.75 - 1"]
+    
+    bins = [
+            data[(data["Hudson_fst_0_1"] >= thresholds[0]) & (data["Hudson_fst_0_1"] < thresholds[1])],
+            data[(data["Hudson_fst_0_1"] >= thresholds[1]) & (data["Hudson_fst_0_1"] < thresholds[2])],
+            data[(data["Hudson_fst_0_1"] >= thresholds[2]) & (data["Hudson_fst_0_1"] < thresholds[3])],
+            data[(data["Hudson_fst_0_1"] >= thresholds[3]) & (data["Hudson_fst_0_1"] <= thresholds[4])],
+    ]
+
+    results = []
+    names = []
+
+    for bin_idx, bin_df in enumerate(bins):
+        bin_df["Topology"] = bin_df["Topology"].astype(str).str.strip()
+        total_diff = bin_df["diff"].sum()
+        label = quantile_tags[bin_idx]
+
+        for topo in topologies:
+            filtered = bin_df[bin_df["Topology"] == topo]
+            prop = filtered["diff"].sum() / total_diff if total_diff != 0 else 0
+            results.append(prop)
+            names.append(f"FST_{label}_{topo}")
+
+    return results, names
+
 def get_stats(data,span):
     df = DataFrame()
     s_sum = summary_sumstats(data, span)
     s_topo = summary_topology_coalescence_times(data)
     if 'Hudson_fst_0_1' in data.columns:
-        s_qt = qt_fst(data)
-        df = concat([df, reshape_results(s_topo, s_sum, qtfst=s_qt)], ignore_index=True)
+        fst_topo = compute_topology_proportions_FST(data)
+        df = concat([df, reshape_results(s_topo, s_sum, qtfst=fst_topo)], ignore_index=True)
     else: 
         df = concat([df, reshape_results(s_topo, s_sum, qtfst=None)], ignore_index=True)
     return df
 
-
-# Function to compute FST proportions and column names per topology
-def topo_span_fst(df, tag):
-    topologies = [
-    "Topology_1_INTRA", "Topology_1_INTER", "Topology_2_INTRA",
-    "Topology_2_INTER", "Topology_3", "Topology_4"
-    ]
-    total = df["diff"].sum()
-    colnames = [f"FST_{tag}_{topo}" for topo in topologies]
-    values = [df[df["Topology"] == topo]["diff"].sum() / total for topo in topologies]
-    return values, colnames
-
-# Main function to extract FST summaries
-def qt_fst(data):
-    # Calculate quantile thresholds
-    thresholds = data["Hudson_fst_0_1"].quantile([0.05, 0.25, 0.5, 0.75, 0.95]).tolist()
-    quantile_tags = ["0.05", "0.05 - 0.25", "0.25 - 0.5", "0.5 - 0.75", "0.75 - 0.95", "0.95"]
     
-    # Define bins for quantiles
-    bins = [
-        data[data["Hudson_fst_0_1"] <= thresholds[0]],
-        data[(data["Hudson_fst_0_1"] > thresholds[0]) & (data["Hudson_fst_0_1"] <= thresholds[1])],
-        data[(data["Hudson_fst_0_1"] > thresholds[1]) & (data["Hudson_fst_0_1"] <= thresholds[2])],
-        data[(data["Hudson_fst_0_1"] > thresholds[2]) & (data["Hudson_fst_0_1"] <= thresholds[3])],
-        data[(data["Hudson_fst_0_1"] > thresholds[3]) & (data["Hudson_fst_0_1"] <= thresholds[4])],
-        data[data["Hudson_fst_0_1"] > thresholds[4]]
-    ]
-    
-    # Compute results and column names
-    result, colnames = [], []
-    for tag, bin_df in zip(quantile_tags, bins):
-        values, names = topo_span_fst(bin_df, tag)
-        result.extend(values)
-        colnames.extend(names)
-    
-    return result, colnames
