@@ -71,7 +71,7 @@
   -G, --genomic_map: Genomic map
   
 ##### Output: 
-- Proportion of each **topology** per region
+- Proportion of each **topology**
 - Average **coalescent times** (C4, C3, C2) for each topology
 - Distribution of **topologies** per quantile of **FST**
 - Average **TMRCA**
@@ -85,7 +85,7 @@
 - Average **2D-SFS** (multi-demes)
 
 ###### Note 1 - expressed in units of branch lentgths (when applicable)
-###### Note 2 - average statistics over all the genomic map, or subsetted by neutral and selection regions
+###### Note 2 - average statistics over all the genomic map, and subsetted by neutral and selection regions
 
 
 ### Appendix: type of topologies tested (N=2 diploids)
