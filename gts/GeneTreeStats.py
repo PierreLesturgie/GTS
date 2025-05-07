@@ -75,14 +75,18 @@ def run_gene_tree_stats(treefile, Nanc, runs,rho,demographic_scenario,genomic_ma
         coordinates = TF.write_branch_lengths_extract_coord(sts_temp, treefile)
 
         run(f"paste {treefile}_ibl {treefile}_ebl > {treefile}_temp", shell=True)
-        run(f"cut -d' ' -f2,3,4,6,7,12,13,14,15 {treefile}_temp > {treefile}_BL", shell=True)
+        run(f"cut -d' ' -f2,3,4,6,7,12,13,14,15,16,17,18,19 {treefile}_temp > {treefile}_BL", shell=True)
 
         # Topology analysis
         with open(f"{treefile}_BL") as bl, open(f"{treefile}_topology.stats", 'w') as topo_out:
             topo_out.write("START END Topology C4 C3 C2\n")
             for line in bl:
                 L = [float(x) for x in line.split()]
-                TBL, IBL, EBL = L[2], L[3:5], L[5:9]
+                TBL, IBL = L[2], L[3:5]
+                a, b =  [5,7,9,11], [6,8,10,12]
+                r1, r2 = [L[i] for i in a], [L[i] for i in b]
+                s=sorted(zip(r1,r2))
+                EBL = [s[0][1],s[1][1],s[2][1],s[3][1]]
                 topo = TF.topology(EBL, topologies, TBL)
                 CT = TF.coalescent_times_n4(IBL, EBL, topo)
                 topo_out.write(f"{L[0]} {L[1]} {topo} {CT[0]} {CT[1]} {CT[2]}\n")
