@@ -42,7 +42,7 @@
   -G, --genomic_map: Genomic map
 
 ##### Output: 
-- **Topology** (out four kind of topologies; see appendix)
+- **Topology** (out six kind of topologies; see appendix)
 - **Coalescent times** (C4, C3, C2)
 - **TMRCA**
 - **Pi(s)**
