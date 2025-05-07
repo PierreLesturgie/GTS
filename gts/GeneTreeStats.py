@@ -3,8 +3,8 @@
 """
 ***GeneTreeStats*** - Script for computing statistics
 Author: Pierre Lesturgie
-Version: 0.1.0
-Last update: 2025-04-24
+Version: 0.1.1
+Last update: 2025-05-07
 """
 
 
