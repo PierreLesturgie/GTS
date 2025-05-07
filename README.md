@@ -47,12 +47,13 @@
 - **TMRCA**
 - **Pi(s)**
 - **1D-SFS(s)**
+- **2D-SFS** (multi-demes)
 - **Total Branch Length**
 - **DAFi** (only multi-demes)
 - **dxy** (only multi-demes)
 - **Hudson's FST** (multi-demes)
 - **Distribution of TMRCAs** per pair of individuals (multi-demes)
-- **2D-SFS** (multi-demes)
+
 
 ###### Note: expressed in units of branch lentgths (when applicable)
 
