@@ -26,7 +26,7 @@
 #### 1. STATS 
 ##### Computing summary and topology statistics for each tree in the .trees tree sequence.
 
-```gts stats -t <treefile> -Nanc <ancestral_effective_size> -r <number_of_sampling_runs> -R <number_of_runs> -D <demographic_scenario> -G <genomic_structure>```
+```gts stats -t <treefile> -Nanc <ancestral_effective_size> -r <number_of_sampling_runs> -R <recombination_rate> -D <demographic_scenario> -G <genomic_structure>```
 
 ##### Arguments: 
   -t, --treefile: Path to file with the tree sequence (omit '.trees')
