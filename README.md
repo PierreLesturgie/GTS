@@ -1,7 +1,13 @@
 # GTS - Pairwise Gene Tree Stats 
 ### Version: 0.1.1
 ---
-##### Author: Pierre Lesturgie (pierrelesturgie@outlook.fr) and Bárbara Parreira for functions (1), (2), (12), (18)
+### Author: Pierre Lesturgie (pierrelesturgie@outlook.fr) and Bárbara Parreira for functions (1), (2), (12), (18)
+
+## Associated manuscript
+
+**The Joint Impact of Deleterious Mutations, Dominance, and Gene Flow on Linked Neutral Variation in Structured Populations**
+
+Pierre Lesturgie, Alexandre Blanckaert, and Vitor C. Sousa 
 
 ### (1) Installation: 
 
