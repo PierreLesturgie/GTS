@@ -6,7 +6,7 @@ Author: Pierre Lesturgie
 Version: 0.1.1
 Last update: 2025-05-07
 
-IMPORTANT: Functions based on Barbara's scripts: function (1), (2), (12) and (18). 
+IMPORTANT: Functions based on Bárbara Parreira's scripts: function (1), (2), (12) and (18). 
 """
 
 from math import factorial
