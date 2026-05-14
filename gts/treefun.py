@@ -19,7 +19,7 @@ import numpy as np
 # ******************** DEFINING FUNCTIONS ********************
 # ************************************************************
 
-### THERE ARE 17 FUNCTIONS
+### THERE ARE 26 FUNCTIONS
 
 # <<<<<< Function 1: subsample trees for given individuals >>>>>>
 def simplify_tree(ts_chroms, keep_indivs):
@@ -692,6 +692,7 @@ def compute_topology_proportions_FST(data):
 
     return results, names
 
+# <<<<<< Function 26: get statistics from dataset >>>>>>
 def get_stats(data,span):
     df = DataFrame()
     s_sum = summary_sumstats(data, span)
