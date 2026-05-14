@@ -2,7 +2,7 @@
 ### Version: 0.1.1
 ---
 #### Author: Pierre Lesturgie (pierrelesturgie@outlook.fr) 
-Collaborator: Bárbara Parreira for functions (1), (2), (12), (18)
+Contributors: Bárbara Parreira
 
 ## Associated manuscript
 
